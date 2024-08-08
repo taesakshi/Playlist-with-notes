@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist with Notes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #ba639c; /* Lavender Background */
+            margin: 0;
+            padding: 20px;
+            color: #ed5f7e;
+            position: relative;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #dac4d3;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(235, 122, 122, 0.1);
+            position: relative;
+        }
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #98065b; /* Slate Blue */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            text-align: center;
+            color: #563e4d;
+        }
+        .song {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #c2bbbf; /* Lavender */
+            border: 1px solid #98065b; /* Light Lavender */
+            border-radius: 8px;
+            position: relative;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .song:hover {
+            background: #bd7da1; /* Light Lavender */
+            transform: scale(1.02);
+        }
+        .song-title {
+            font-size: 1.5em;
+            color: #98065b; /* Slate Blue */
+            margin-bottom: 10px;
+        }
+        .note {
+            margin-top: 10px;
+            font-style: italic;
+            color: #754f70;
+        }
+        iframe {
+            width: 100%;
+            height: 80px;
+            border: none;
+            border-radius: 8px;
+        }
+        .queue {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #f5d3f2;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+            overflow-y: auto;
+            width: 270px;
+            display: none; /* Initially hidden */
+            z-index: 1000; /* Ensures it's on top */
+        }
+        .queue h2 {
+            font-size: 1.2em;
+            color: #cd5ac0; /* Slate Blue */
+            margin-top: 0;
+        }
+        .queue-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px;
+            border: 1px solid #f5d3e6;
+            border-radius: 10px;
+            background: #f3e6f7; /* Light Lavender */
+            transition: background 0.3s, transform 0.3s;
+        }
+        .queue-item:hover {
+            background: #e0c8f5; /* Slightly Darker Lavender */
+            transform: scale(1.02);
+        }
+        .queue-item .bi {
+            font-size: 40px;
+            margin-right: 12px;
+            color: #c479ab; /* Slate Blue */
+        }
+        .queue-item .song-title {
+            font-size: 1em;
+            color: #b39bad; /* Blue Violet */
+            flex: 1;
+        }
+        .queue-item .play-btn {
+            background: #766675; /* Blue Violet */
+            color: #ffdff3;
+            border: none;
+            border-radius: 6px;
+            padding: 5px 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .queue-item .play-btn:hover {
+            background: #ae90b4; /* Darker Blue Violet */
+        }
+        .queue-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #755c73; /* Slate Blue */
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5em;
+            z-index: 1001; /* Above the queue */
+        }
+        .play-btn {
+            background: #94748b; /* Blue Violet */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .play-btn:hover {
+            background: #caa4c1; /* Darker Blue Violet */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Miles Apart, Hearts Together</h1>
+        <p>I love you so much baby!! 
+            HAPPY BIRTHDAY</p>
+
+        <div class="song">
+            <div class="song-title">Perfect Two - Auburn</div>
+            <iframe src="https://open.spotify.com/embed/track/37aZmOi9YoSQIcui9oX8bR" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">We are the perfect pair, no matter the distance. Our favourite song together!!</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/37aZmOi9YoSQIcui9oX8bR', 'Perfect Two - Auburn')">Add to Queue</button>
+        </div>
+        
+        <div class="song">
+            <div class="song-title">I Love You So Much</div>
+            <iframe src="https://open.spotify.com/embed/track/4CreOwx4doKJUyxRR0GjIE" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">This song captures how deeply I feel about you, even though we're apart.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/4CreOwx4doKJUyxRR0GjIE', 'I Love You So Much')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">I Won't Give Up - Jason Mraz</div>
+            <iframe src="https://open.spotify.com/embed/track/05pKAafT85jeeNhZ6kq7HT" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">My commitment to us, no matter what challenges we face.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/05pKAafT85jeeNhZ6kq7HT', 'I Won\'t Give Up - Jason Mraz')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Just the Way You Are - Bruno Mars</div>
+            <iframe src="https://open.spotify.com/embed/track/7BqBn9nzAq8spo5e7cZ0dJ" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">You are perfect just the way you are, and I love you for it.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/7BqBn9nzAq8spo5e7cZ0dJ', 'Just the Way You Are - Bruno Mars')">Add to Queue</button>
+        </div>
+        
+        <div class="song">
+            <div class="song-title">Perfect - Ed Sheeran</div>
+            <iframe src="https://open.spotify.com/embed/track/0tgVpDi06FyKpA1z0VMD4v" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">This song reminds me of our perfect moments together.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/0tgVpDi06FyKpA1z0VMD4v', 'Perfect - Ed Sheeran')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Until I Found You - Stephen Sanchez & Em Beihold</div>
+            <iframe src="https://open.spotify.com/embed/album/7ARtQpvnPN2ucbmVHngLOs" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">My life only made sense when I found you.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/album/7ARtQpvnPN2ucbmVHngLOs', 'Until I Found You - Stephen Sanchez & Em Beihold')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">All of Me - John Legend</div>
+            <iframe src="https://open.spotify.com/embed/track/3U4isOIWM3VvDubwSI3y7a" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">A beautiful expression of loving you completely, every part of you.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/3U4isOIWM3VvDubwSI3y7a', 'All of Me - John Legend')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Best Part - Daniel Caesar & H.E.R.</div>
+            <iframe src="https://open.spotify.com/embed/track/1RMJOxR6GRPsBHL8qeC2ux" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">You are the best part of my life, and this song captures it beautifully.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/1RMJOxR6GRPsBHL8qeC2ux', 'Best Part - Daniel Caesar & H.E.R.')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Better Together - Jack Johnson</div>
+            <iframe src="https://open.spotify.com/embed/track/2iXdwVdzA0KrI2Q0iZNJbX" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">How much better everything is when we’re together.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/2iXdwVdzA0KrI2Q0iZNJbX', 'Better Together - Jack Johnson')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Lay Me Down - Sam Smith</div>
+            <iframe src="https://open.spotify.com/embed/track/5CRmy13zTaajpGN1rBb3IF" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">The depth of my feelings and how much I long to be close to you.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/5CRmy13zTaajpGN1rBb3IF', 'Lay Me Down - Sam Smith')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Ho Hey - The Lumineers</div>
+            <iframe src="https://open.spotify.com/embed/track/0DwClY2t9YAWHBROMIgrXb" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">The Joyful, folk feel that reminds me of the simple and happy moments we share.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/0DwClY2t9YAWHBROMIgrXb', 'Ho Hey - The Lumineers')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Somewhere Only We Know - Keane</div>
+            <iframe src="https://open.spotify.com/embed/track/1SKPmfSYaPsETbRHaiA18G" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">Our special place, where only we can truly understand each other.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/1SKPmfSYaPsETbRHaiA18G', 'Somewhere Only We Know - Keane')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">The One - Kodaline</div>
+            <iframe src="https://open.spotify.com/embed/track/0My8NPmENHrN5W7OfgZnZJ" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">This is how I feel about you being the one for me.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/0My8NPmENHrN5W7OfgZnZJ', 'The One - Kodaline')">Add to Queue</button>
+        </div>
+        
+        <div class="song">
+            <div class="song-title">Riptide - Vance Joy</div>
+            <iframe src="https://open.spotify.com/embed/track/7yq4Qj7cqayVTp3FF9CWbm" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">The feeling of being irresistibly drawn to you, just like the riptide.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/7yq4Qj7cqayVTp3FF9CWbm', 'Riptide - Vance Joy')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">Like My Father - Jax</div>
+            <iframe src="https://open.spotify.com/embed/track/5YVmHTAsdWnoanWXB7AwZX" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">I want us to love just like my parents.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/5YVmHTAsdWnoanWXB7AwZX', 'Like My Father - Jax')">Add to Queue</button>
+        </div>
+
+        <div class="song">
+            <div class="song-title">I Love You Baby - Emilee</div>
+            <iframe src="https://open.spotify.com/embed/track/124lzQbZK2jQZqwTq8jt2n" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div class="note">I love you baby.</div>
+            <button class="play-btn" onclick="addToQueue('https://open.spotify.com/embed/track/124lzQbZK2jQZqwTq8jt2n', 'I Love You Baby - Emilee')">Add to Queue</button>
+        </div>
+    </div>
+
+    <!-- Queue Section -->
+    <div class="queue" id="queue">
+        <h2>Queue</h2>
+        <div id="queue-list"></div>
+    </div>
+    <button class="queue-toggle" onclick="toggleQueue()">📝</button>
+
+    <script>
+        const queueList = document.getElementById('queue-list');
+        const queue = document.getElementById('queue');
+
+        function addToQueue(url, title) {
+            const queueItem = document.createElement('div');
+            queueItem.classList.add('queue-item');
+            
+            const songTitle = document.createElement('div');
+            songTitle.classList.add('song-title');
+            songTitle.textContent = title;
+
+            const playBtn = document.createElement('button');
+            playBtn.classList.add('play-btn');
+            playBtn.textContent = 'Play';
+            playBtn.onclick = function() {
+                window.open(url, '_blank');
+            };
+
+            const icon = document.createElement('i');
+            icon.classList.add('bi', 'bi-music-note');
+
+            queueItem.appendChild(icon);
+            queueItem.appendChild(songTitle);
+            queueItem.appendChild(playBtn);
+
+            queueList.appendChild(queueItem);
+        }
+
+        function toggleQueue() {
+            if (queue.style.display === 'none' || queue.style.display === '') {
+                queue.style.display = 'block';
+            } else {
+                queue.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
