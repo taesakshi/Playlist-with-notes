@@ -4,6 +4,10 @@
 
 Welcome to the "Playlist with Notes" project! This web application showcases a personalized playlist with special notes attached to each song. The playlist is designed to be a heartfelt gift, capturing the essence of a long-distance relationship and celebrating special moments. The playlist features embedded Spotify tracks, allowing users to listen to their favorite songs directly from the page.
 
+## Live Demo
+
+You can view the live demo of the project at [https://taesakshi.github.io/Playlist-with-notes/](https://taesakshi.github.io/Playlist-with-notes/).
+
 ## Features
 
 - **Responsive Design**: The application is designed to be fully responsive, ensuring a great experience on both desktop and mobile devices.
@@ -24,3 +28,7 @@ Welcome to the "Playlist with Notes" project! This web application showcases a p
 
    ```bash
    git clone https://github.com/yourusername/playlist-with-notes.git
+
+
+
+
